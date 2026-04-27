@@ -1,47 +1,21 @@
+import java.util.Arrays;
+
 public class TrainConsistManagementApp {
-
-    static class CargoSafetyException extends RuntimeException {
-        public CargoSafetyException(String message) {
-            super(message);
-        }
-    }
-
-    static class GoodsBogie {
-        String shape;
-        String cargo;
-
-        GoodsBogie(String shape) {
-            this.shape = shape;
-        }
-
-        void assignCargo(String cargo) {
-            try {
-                if (shape.equals("Rectangular") && cargo.equals("Petroleum")) {
-                    throw new CargoSafetyException("Unsafe cargo assignment");
-                }
-                this.cargo = cargo;
-                System.out.println("Cargo assigned: " + cargo);
-            } catch (CargoSafetyException e) {
-                System.out.println("Error: " + e.getMessage());
-            } finally {
-                System.out.println("Assignment attempt completed");
-            }
-        }
-    }
 
     public static void main(String[] args) {
 
         System.out.println("======================================");
-        System.out.println("UC15 - Safe Cargo Assignment");
+        System.out.println("UC17 - Sort Bogie Names Using Arrays.sort()");
         System.out.println("======================================\n");
 
-        GoodsBogie b1 = new GoodsBogie("Cylindrical");
-        b1.assignCargo("Petroleum");
+        String[] bogies = {"Sleeper", "AC Chair", "First Class", "General", "Luxury"};
 
-        GoodsBogie b2 = new GoodsBogie("Rectangular");
-        b2.assignCargo("Petroleum");
+        System.out.println("Original Bogie Names:");
+        System.out.println(Arrays.toString(bogies));
 
-        GoodsBogie b3 = new GoodsBogie("Rectangular");
-        b3.assignCargo("Coal");
+        Arrays.sort(bogies);
+
+        System.out.println("\nSorted Bogie Names:");
+        System.out.println(Arrays.toString(bogies));
     }
 }

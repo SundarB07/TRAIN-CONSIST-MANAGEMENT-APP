@@ -1,76 +1,41 @@
 import org.junit.jupiter.api.Test;
+import java.util.Arrays;
 import static org.junit.jupiter.api.Assertions.*;
 
 class TrainConsistManagementAppTest {
 
-    static class CargoSafetyException extends RuntimeException {
-        public CargoSafetyException(String message) {
-            super(message);
-        }
-    }
-
-    static class GoodsBogie {
-        String shape;
-        String cargo;
-
-        GoodsBogie(String shape) {
-            this.shape = shape;
-        }
-
-        void assignCargo(String cargo) {
-            if (shape.equals("Rectangular") && cargo.equals("Petroleum")) {
-                throw new CargoSafetyException("Unsafe cargo assignment");
-            }
-            this.cargo = cargo;
-        }
+    @Test
+    void testSort_BasicAlphabeticalSorting() {
+        String[] arr = {"Sleeper","AC Chair","First Class","General","Luxury"};
+        Arrays.sort(arr);
+        assertArrayEquals(new String[]{"AC Chair","First Class","General","Luxury","Sleeper"}, arr);
     }
 
     @Test
-    void testCargo_SafeAssignment() {
-        GoodsBogie b = new GoodsBogie("Cylindrical");
-        b.assignCargo("Petroleum");
-        assertEquals("Petroleum", b.cargo);
+    void testSort_UnsortedInput() {
+        String[] arr = {"Luxury","General","Sleeper","AC Chair"};
+        Arrays.sort(arr);
+        assertArrayEquals(new String[]{"AC Chair","General","Luxury","Sleeper"}, arr);
     }
 
     @Test
-    void testCargo_UnsafeAssignmentHandled() {
-        GoodsBogie b = new GoodsBogie("Rectangular");
-        assertThrows(CargoSafetyException.class, () -> {
-            b.assignCargo("Petroleum");
-        });
+    void testSort_AlreadySortedArray() {
+        String[] arr = {"AC Chair","First Class","General"};
+        Arrays.sort(arr);
+        assertArrayEquals(new String[]{"AC Chair","First Class","General"}, arr);
     }
 
     @Test
-    void testCargo_CargoNotAssignedAfterFailure() {
-        GoodsBogie b = new GoodsBogie("Rectangular");
-        try {
-            b.assignCargo("Petroleum");
-        } catch (CargoSafetyException e) {
-        }
-        assertNull(b.cargo);
+    void testSort_DuplicateBogieNames() {
+        String[] arr = {"Sleeper","AC Chair","Sleeper","General"};
+        Arrays.sort(arr);
+        assertArrayEquals(new String[]{"AC Chair","General","Sleeper","Sleeper"}, arr);
     }
 
     @Test
-    void testCargo_ProgramContinuesAfterException() {
-        GoodsBogie b1 = new GoodsBogie("Rectangular");
-        GoodsBogie b2 = new GoodsBogie("Cylindrical");
-
-        try {
-            b1.assignCargo("Petroleum");
-        } catch (Exception e) {
-        }
-
-        b2.assignCargo("Coal");
-        assertEquals("Coal", b2.cargo);
-    }
-
-    @Test
-    void testCargo_FinallyBlockExecution() {
-        GoodsBogie b = new GoodsBogie("Rectangular");
-        try {
-            b.assignCargo("Petroleum");
-        } catch (Exception e) {
-        }
-        assertTrue(true);
+    void testSort_SingleElementArray() {
+        String[] arr = {"Sleeper"};
+        Arrays.sort(arr);
+        assertArrayEquals(new String[]{"Sleeper"}, arr);
     }
 }
